@@ -1,0 +1,401 @@
+/* Uploadexcel.css */
+.uploadexcel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.uploadexcel-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.uploadexcel-shape {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  animation: float 6s ease-in-out infinite;
+}
+
+.shape1 {
+  width: 200px;
+  height: 200px;
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.shape2 {
+  width: 150px;
+  height: 150px;
+  top: 70%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.shape3 {
+  width: 100px;
+  height: 100px;
+  top: 30%;
+  right: 30%;
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-20px) rotate(5deg); }
+  50% { transform: translateY(-10px) rotate(-5deg); }
+  75% { transform: translateY(-15px) rotate(3deg); }
+}
+
+.uploadexcel-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 3px solid #667eea;
+  padding: 5rem 4rem;
+  border-radius: 40px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  min-width: 900px;
+  max-width: 1200px;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.uploadexcel-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.uploadexcel-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+  color: white;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.uploadexcel-header h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.uploadexcel-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+.uploadexcel-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.uploadexcel-dropzone {
+  position: relative;
+  border: 2px dashed #d1d5db;
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  text-align: center;
+  background: #f9fafb;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.uploadexcel-dropzone:hover,
+.uploadexcel-dropzone.active {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+  transform: translateY(-2px);
+}
+
+.uploadexcel-dropzone.has-files {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.uploadexcel-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.uploadexcel-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.uploadexcel-upload-icon {
+  color: #9ca3af;
+  transition: color 0.3s ease;
+}
+
+.uploadexcel-dropzone:hover .uploadexcel-upload-icon {
+  color: #667eea;
+}
+
+.uploadexcel-label-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.uploadexcel-label-subtext {
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.uploadexcel-file-list {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.uploadexcel-file-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+.uploadexcel-file-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.uploadexcel-file-item:last-child {
+  margin-bottom: 0;
+}
+
+.uploadexcel-file-item svg {
+  color: #667eea;
+  flex-shrink: 0;
+}
+
+.uploadexcel-file-name {
+  flex: 1;
+  font-weight: 500;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.uploadexcel-file-size {
+  font-size: 0.875rem;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.uploadexcel-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.uploadexcel-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.uploadexcel-btn:hover::before {
+  left: 100%;
+}
+
+.uploadexcel-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.uploadexcel-btn:active {
+  transform: translateY(0);
+}
+
+.uploadexcel-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.uploadexcel-btn:disabled::before {
+  display: none;
+}
+
+.uploadexcel-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.uploadexcel-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 1rem;
+  animation: messageSlide 0.4s ease-out;
+}
+
+@keyframes messageSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.uploadexcel-message.success {
+  background: rgba(16, 185, 129, 0.1);
+  color: #047857;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.uploadexcel-message.error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .uploadexcel-container {
+    padding: 1rem;
+  }
+  
+  .uploadexcel-card {
+    min-width: unset;
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+  }
+  
+  .uploadexcel-dropzone {
+    padding: 2rem 1rem;
+  }
+  
+  .uploadexcel-header h2 {
+    font-size: 1.75rem;
+  }
+  
+  .uploadexcel-header p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .uploadexcel-card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .uploadexcel-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .uploadexcel-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .uploadexcel-dropzone {
+    padding: 1.5rem 1rem;
+  }
+}
+
+.uploadexcel-table th,
+.uploadexcel-table td {
+  font-size: 1.15rem;      /* Larger font */
+  padding: 16px 14px;      /* More padding */
+}
+
+.uploadexcel-table th {
+  position: sticky;
+  top: 0;
+  background: #f3f4f6;
+  z-index: 2;
+}
+
+.uploadexcel-table tbody tr:nth-child(even) {
+  background: #f9fafb;
+}

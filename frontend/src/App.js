@@ -9,7 +9,7 @@ function App() {
       <Sidebar />
       <div style={{ marginLeft: 220, flex: 1 }}>
         <Routes>
-          <Route path="/upload" element={<Uploadexcel />} /> 
+          <Route path="/" element={<Uploadexcel />} /> 
         </Routes>
       </div>
     </div>

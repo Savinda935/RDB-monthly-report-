@@ -14,6 +14,8 @@ function Uploadexcel() {
   const [uploadedColumns, setUploadedColumns] = useState([]);
   const [uploadedRows, setUploadedRows] = useState([]);
   const [statusSummary, setStatusSummary] = useState({});
+  const [month, setMonth] = useState('');
+  const [year, setYear] = useState('');
   const navigate = useNavigate();
 
   const handleFileChange = (e) => {
@@ -83,6 +85,40 @@ function Uploadexcel() {
       </div>
 
       <div className="uploadexcel-card">
+        {/* --- Add Month & Year Selectors --- */}
+        <div style={{ display: 'flex', gap: 16, marginBottom: 24, justifyContent: 'center' }}>
+          <div>
+            <label style={{ fontWeight: 600, marginRight: 8 }}>Month:</label>
+            <select
+              value={month}
+              onChange={e => setMonth(e.target.value)}
+              style={{ padding: '6px 12px', borderRadius: 6, border: '1px solid #ccc' }}
+            >
+              <option value="">Select Month</option>
+              {[
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+              ].map((m, idx) => (
+                <option key={m} value={m}>{m}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label style={{ fontWeight: 600, marginRight: 8 }}>Year:</label>
+            <select
+              value={year}
+              onChange={e => setYear(e.target.value)}
+              style={{ padding: '6px 12px', borderRadius: 6, border: '1px solid #ccc' }}
+            >
+              <option value="">Select Year</option>
+              {Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - i).map(y => (
+                <option key={y} value={y}>{y}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+        {/* --- End Month & Year Selectors --- */}
+
         <div className="uploadexcel-header">
           <div className="uploadexcel-icon">
             {/* SVG icon */}
@@ -187,6 +223,15 @@ function Uploadexcel() {
                     const pageWidth = doc.internal.pageSize.getWidth();
                     const pageHeight = doc.internal.pageSize.getHeight();
                     doc.addImage(dataUrl, 'PNG', 0, 0, pageWidth, pageHeight);
+
+                    // 👉 Add Month and Year on the first page (over the image)
+                    doc.setFontSize(40);
+                    doc.setTextColor(0, 0, 0); // Black color
+                    doc.setFont('helvetica', 'bold'); // Bold font
+                    doc.text(` ${month || '-'}`, 20, 235);
+                    doc.text(` ${year || '-'}`, 20, 220);
+                    
+
                     doc.addPage();
                     doc.setFontSize(22);
                     doc.setTextColor('#667eea');
@@ -198,7 +243,7 @@ function Uploadexcel() {
                     autoTable(doc, {
                       head: [uploadedColumns],
                       body: uploadedRows.map(row => uploadedColumns.map(col => row[col] || '-')),
-                      startY: 35,
+                      startY: 50,
                       styles: { fontSize: 10, textColor: '#232946' },
                       headStyles: { fillColor: [102, 126, 234], textColor: '#fff', fontStyle: 'bold' },
                       alternateRowStyles: { fillColor: [240, 244, 255] },

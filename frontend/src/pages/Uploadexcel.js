@@ -50,6 +50,27 @@ function Uploadexcel() {
     }
   };
 
+  // Function to convert Excel serial number to date
+  const convertExcelDate = (excelDate) => {
+    if (!excelDate || excelDate === '') return '';
+    
+    // Check if it's an Excel serial number (numeric)
+    if (typeof excelDate === 'number' && excelDate > 1) {
+      // Excel dates are number of days since 1900-01-01
+      // Convert to milliseconds and create Date object
+      const milliseconds = (excelDate - 25569) * 24 * 60 * 60 * 1000;
+      const date = new Date(milliseconds);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      });
+    }
+    
+    // If it's already a string or other format, return as is
+    return excelDate;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -69,9 +90,22 @@ function Uploadexcel() {
       const processedRows = allRows.map(row => {
         const dueBy = row['DueBy Date'];
         const resolvedDate = row['Resolved Date'];
+        
+        // Convert all potential date columns
+        const convertedRow = {};
+        Object.keys(row).forEach(key => {
+          const value = row[key];
+          // Check if the column name contains 'date' or 'Date' (case insensitive)
+          if (key.toLowerCase().includes('date')) {
+            convertedRow[key] = convertExcelDate(value);
+          } else {
+            convertedRow[key] = value;
+          }
+        });
+        
         return {
-          ...row,
-          'SLA': calculateSLA(dueBy, resolvedDate),
+          ...convertedRow,
+          'SLA': calculateSLA(convertedRow['DueBy Date'], convertedRow['Resolved Date']),
         };
       });
 
@@ -125,6 +159,14 @@ function Uploadexcel() {
     const autoTable = autoTableModule.default;
     const doc = new jsPDF();
 
+    // Get current date
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+
     const toDataURL = url =>
       fetch(url)
         .then(response => response.blob())
@@ -157,11 +199,17 @@ function Uploadexcel() {
       doc.setLineWidth(1.5);
       doc.line(14, 30, pageWidth - 14, 30);
 
+      // Add report generation date
+      doc.setFontSize(12);
+      doc.setTextColor('#666');
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Report Generated: ${formattedDate}`, 14, 45);
+
       // Add main table
       autoTable(doc, {
         head: [uploadedColumns],
         body: uploadedRows.map(row => uploadedColumns.map(col => row[col] || '-')),
-        startY: 50,
+        startY: 60,
         styles: { fontSize: 10, textColor: '#232946' },
         headStyles: { fillColor: [102, 126, 234], textColor: '#fff', fontStyle: 'bold' },
         alternateRowStyles: { fillColor: [240, 244, 255] },
